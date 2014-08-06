@@ -4,7 +4,10 @@ unsigned long last_run;
 
 void setup()
 {
+  Serial.begin(SERIAL_SPEED);
+  while (!Serial){};
 
+  pinMode(ledPin, OUTPUT);
 }
 
 void loop()
