@@ -8,7 +8,7 @@
 set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/arduino-cmake/cmake/ArduinoToolchain.cmake)
 
 cmake_minimum_required(VERSION 2.8)
-project(fermware)
+project(FERMware)
 
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/libraries)
 
