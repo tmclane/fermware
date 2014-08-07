@@ -1,8 +1,7 @@
-#include <Arduino.h>
+#ifndef _H_CONSTANTS
+#define _H_CONSTANTS
 
-
-const int ledPin =  13;
-int ledState = LOW;
-
-
+#define HEARTBEAT_LED 13
 #define SERIAL_SPEED 115200
+
+#endif
