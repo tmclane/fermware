@@ -1,9 +1,12 @@
 #include <Arduino.h>
 
+#include "commands.h"
 #include "constants.h"
 #include "globals.h"
 
 unsigned long last_time;
+
+// Arduino Entry Points
 
 void setup()
 {
@@ -20,7 +23,7 @@ void loop()
     last_time = current_time;
     ledState = ledState == HIGH ? LOW : HIGH;
     digitalWrite(HEARTBEAT_LED, ledState);
-    // FIXME: Do work here
   }
 
+  process_commands();
 }
