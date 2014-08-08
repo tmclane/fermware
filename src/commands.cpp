@@ -5,13 +5,15 @@ String current_command = "";
 
 void process_command(const String &command)
 {
-  Serial.print("Received command: ");
-  Serial.print(command);
-  Serial.println();
-
   if (command == "list_sensors"){
       discover_sensors(A4);
   }
+  else
+    {
+      Serial.print("{\"status\": \"error\", \"message\": \"Received command: '");
+      Serial.print(command);
+      Serial.println("'\"}");
+    }
 }
 
 void process_commands()
