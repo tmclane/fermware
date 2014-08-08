@@ -100,7 +100,7 @@ void discover_sensors(int onewire_pin)
 
   if ( !ds.search(addr)) {
     ds.reset_search();
-    delay(250);
+    Serial.println("[]");  // No sensors present
     return;
   }
   else {
