@@ -2,7 +2,6 @@
 #include "sensors.h"
 
 String current_command = "";
-#define DEBUG
 
 void process_command(const String &command)
 {
