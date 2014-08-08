@@ -66,7 +66,7 @@ void sensor_temperature(OneWire &ds, const byte* addr)
 
   Serial.print("\"C\":");
   Serial.print(celsius);
-  Serial.print("\"F\":");
+  Serial.print(",\"F\":");
   Serial.print(fahrenheit);
 }
 
