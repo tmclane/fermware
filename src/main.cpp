@@ -14,6 +14,12 @@ void setup()
   while (!Serial){};
 
   pinMode(HEARTBEAT_LED, OUTPUT);
+
+  // Initial control pins to LOW
+  for (int i=4; i<8; i++){
+    pinMode(i, OUTPUT);
+    digitalWrite(i, HIGH);
+  }
 }
 
 void loop()
