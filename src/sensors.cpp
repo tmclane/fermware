@@ -70,8 +70,6 @@ void sensor_temperature(OneWire &ds, const byte* addr, float &celsius, float &fa
 
 void sensor_details(OneWire &ds, struct Sensor& sensor)
 {
-  float celsius, fahrenheit;
-
   Serial.print("{\"address\":\"");
   for(int i = 0; i < 7; i++) {
     if (sensor.address[i] < 10)
@@ -85,12 +83,12 @@ void sensor_details(OneWire &ds, struct Sensor& sensor)
   Serial.print(sensor.address[7], HEX);
   Serial.print("\",");
 
-  sensor_temperature(ds, sensor.address, celsius, fahrenheit);
+  sensor_temperature(ds, sensor.address, sensor.celsius, sensor.fahrenheit);
 
   Serial.print("\"C\":");
-  Serial.print(celsius);
+  Serial.print(sensor.celsius);
   Serial.print(",\"F\":");
-  Serial.print(fahrenheit);
+  Serial.print(sensor.fahrenheit);
 
   Serial.print('}');
 }

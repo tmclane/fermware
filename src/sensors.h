@@ -3,9 +3,11 @@
 
 #include <Arduino.h>
 
-struct Sensor {
-        uint8_t address[8];
-        char id;
+struct Sensor
+{
+  uint8_t address[8];
+  float celsius;
+  float fahrenheit;
 };
 
 extern struct Sensor* sensors;
