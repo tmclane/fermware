@@ -13,6 +13,8 @@ void maintain_system(unsigned long current_time)
 {
   if ((current_time - system_last_time) / 1000 > ACTIVATION_TIME ){
     update_sensors(SENSOR_PIN);
+    delay(100);
+    update_sensors(SENSOR_PIN);
 
     // Maintain Ale Zone (Bottom Chamber)
 
