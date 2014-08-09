@@ -4,6 +4,9 @@
 int sensor_count = 0;
 struct Sensor* sensors = NULL;
 
+OneWire ds(A4);
+
+
 void sensor_temperature(OneWire &ds, const byte* addr)
 {
   byte type_s;
@@ -89,7 +92,6 @@ void sensor_details(OneWire &ds, const byte* addr)
 
 void discover_sensors(int onewire_pin)
 {
-  OneWire ds(onewire_pin);
   byte addr[8];
 
   sensor_count = 0;
