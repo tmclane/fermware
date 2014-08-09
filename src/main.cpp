@@ -5,7 +5,7 @@
 #include "globals.h"
 #include "system.h"
 
-unsigned long last_time;
+unsigned long last_time = -1;
 
 // Arduino Entry Points
 
@@ -26,7 +26,10 @@ void setup()
 void loop()
 {
   unsigned long current_time = millis();
-  if(current_time - last_time > 1000) {
+  if (last_time == -1)
+    current_time = -1;  // to ensure the code runs right away
+
+  if(current_time - last_time > 1000 || last_time == -1) {
     last_time = current_time;
     ledState = ledState == HIGH ? LOW : HIGH;
     digitalWrite(HEARTBEAT_LED, ledState);
