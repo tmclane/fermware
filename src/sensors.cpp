@@ -8,11 +8,10 @@ OneWire ds(A4);
 
 void discover_sensors(int);
 
-void sensor_temperature(OneWire &ds, const byte* addr)
+void sensor_temperature(OneWire &ds, const byte* addr, float &celsius, float &fahrenheit)
 {
   byte type_s;
   byte data[12];
-  float celsius, fahrenheit;
   byte present = 0;
 
   // the first ROM byte indicates which chip
@@ -67,27 +66,32 @@ void sensor_temperature(OneWire &ds, const byte* addr)
 
   celsius = (float)raw / 16.0;
   fahrenheit = celsius * 1.8 + 32.0;
+}
+
+void sensor_details(OneWire &ds, struct Sensor& sensor)
+{
+  float celsius, fahrenheit;
+
+  Serial.print("{\"address\":\"");
+  for(int i = 0; i < 7; i++) {
+    if (sensor.address[i] < 10)
+      Serial.print('0');
+    Serial.print(sensor.address[i], HEX);
+    Serial.print(':');
+  }
+  if (sensor.address[7] < 10)
+    Serial.print('0');
+
+  Serial.print(sensor.address[7], HEX);
+  Serial.print("\",");
+
+  sensor_temperature(ds, sensor.address, celsius, fahrenheit);
 
   Serial.print("\"C\":");
   Serial.print(celsius);
   Serial.print(",\"F\":");
   Serial.print(fahrenheit);
-}
 
-void sensor_details(OneWire &ds, const byte* addr)
-{
-  Serial.print("{\"address\":\"");
-  for(int i = 0; i < 7; i++) {
-    if (addr[i] < 10)
-      Serial.print('0');
-    Serial.print(addr[i], HEX);
-    Serial.print(':');
-  }
-  if (addr[7] < 10)
-    Serial.print('0');
-  Serial.print(addr[7], HEX);
-  Serial.print("\",");
-  sensor_temperature(ds, addr);
   Serial.print('}');
 }
 
@@ -145,12 +149,12 @@ void list_sensors(int onewire_pin)
   }
   else {
     Serial.print('[');
-    sensor_details(ds, sensors[0].address);
+    sensor_details(ds, sensors[0]);
   }
   int processed = 0;
   for (int i=1; i<sensor_count; i++){
     Serial.print(',');
-    sensor_details(ds, sensors[i].address);
+    sensor_details(ds, sensors[i]);
   }
   if (sensor_count)
     Serial.print("]\n");
