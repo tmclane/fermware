@@ -1,10 +1,11 @@
 #include <OneWire.h>
+#include "constants.h"
 #include "sensors.h"
 
 int sensor_count = 0;
 struct Sensor* sensors = NULL;
 
-OneWire ds(A4);
+OneWire ds(SENSOR_PIN);
 
 void discover_sensors(int);
 
@@ -83,8 +84,6 @@ void sensor_details(OneWire &ds, struct Sensor& sensor)
   Serial.print(sensor.address[7], HEX);
   Serial.print("\",");
 
-  sensor_temperature(ds, sensor.address, sensor.celsius, sensor.fahrenheit);
-
   Serial.print("\"C\":");
   Serial.print(sensor.celsius);
   Serial.print(",\"F\":");
@@ -156,4 +155,12 @@ void list_sensors(int onewire_pin)
   }
   if (sensor_count)
     Serial.print("]\n");
+}
+
+void update_sensors(int onewire_pin)
+{
+  int processed = 0;
+  for (int i=0; i<sensor_count; i++){
+    sensor_temperature(ds, sensors[i].address, sensors[i].celsius, sensors[i].fahrenheit);
+  }
 }

@@ -10,4 +10,6 @@
 #define TOPCHAMBER 6
 #define BOTTOMCHAMBER 6
 
+#define SENSOR_PIN A4
+
 #endif

@@ -1,3 +1,5 @@
+#include "constants.h"
+#include "sensors.h"
 #include "system.h"
 
 unsigned long system_last_time;
@@ -10,6 +12,7 @@ unsigned long system_last_time;
 void maintain_system(unsigned long current_time)
 {
   if ((current_time - system_last_time) / 1000 > ACTIVATION_TIME ){
+    update_sensors(SENSOR_PIN);
 
     // Maintain Ale Zone (Bottom Chamber)
 
