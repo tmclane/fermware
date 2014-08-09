@@ -102,7 +102,7 @@ void discover_sensors(int onewire_pin)
 
   if ( !ds.search(addr)) {
     ds.reset_search();
-    Serial.println("[]");  // No sensors present
+    Serial.println("[]\n");  // No sensors present
     return;
   }
   else {
@@ -117,5 +117,5 @@ void discover_sensors(int onewire_pin)
     sensor_count++;
   }
   if (sensor_count)
-    Serial.print(']');
+    Serial.print("]\n");
 }
