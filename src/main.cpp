@@ -35,7 +35,11 @@ void loop()
     digitalWrite(HEARTBEAT_LED, ledState);
 
     maintain_system(current_time);
+
+    if (last_time == -1)
+      last_time = millis();
   }
 
   process_commands();
+
 }
