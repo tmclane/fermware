@@ -6,4 +6,8 @@
 #define HEARTBEAT_LED LED_BUILTIN
 #define SERIAL_SPEED 115200
 
+#define AIRCON 5
+#define TOPCHAMBER 6
+#define BOTTOMCHAMBER 6
+
 #endif

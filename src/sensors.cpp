@@ -6,6 +6,7 @@ struct Sensor* sensors = NULL;
 
 OneWire ds(A4);
 
+void discover_sensors(int);
 
 void sensor_temperature(OneWire &ds, const byte* addr)
 {
@@ -90,31 +91,66 @@ void sensor_details(OneWire &ds, const byte* addr)
   Serial.print('}');
 }
 
-void discover_sensors(int onewire_pin)
+int count_sensors(int onewire_pin)
 {
   byte addr[8];
 
-  sensor_count = 0;
-  if (sensors){
-    free(sensors);
-    sensors = NULL;
-  }
+  int count = 0;
 
   if ( !ds.search(addr)) {
     ds.reset_search();
+    return 0;
+  }
+  else {
+    count++;
+  }
+
+  while(ds.search(addr)){
+    count++;
+  }
+
+  return count;
+}
+
+void discover_sensors(int onewire_pin)
+{
+  int processed = 0;
+  int count = count_sensors(onewire_pin);
+
+  if (sensors){
+    free(sensors);
+    sensor_count = 0;
+  }
+
+  if (count){
+    sensors = (struct Sensor*)malloc(sizeof(struct Sensor) * sensor_count);
+  }
+
+  ds.reset_search();
+  while(processed < count && ds.search(sensors[processed].address)){
+    processed++;
+  }
+
+  sensor_count = processed;
+}
+
+void list_sensors(int onewire_pin)
+{
+  if (!sensors)
+    discover_sensors(onewire_pin);
+
+  if (!sensor_count){
     Serial.println("[]\n");  // No sensors present
     return;
   }
   else {
     Serial.print('[');
-    sensor_details(ds, addr);
-    sensor_count++;
+    sensor_details(ds, sensors[0].address);
   }
-
-  while(ds.search(addr)){
+  int processed = 0;
+  for (int i=1; i<sensor_count; i++){
     Serial.print(',');
-    sensor_details(ds, addr);
-    sensor_count++;
+    sensor_details(ds, sensors[i].address);
   }
   if (sensor_count)
     Serial.print("]\n");

@@ -1,7 +1,7 @@
 set(ARDUINO_DEFAULT_BOARD uno) # Default Board ID, when not specified
 set(ARDUINO_DEFAULT_PORT /dev/ttyUSB0) # Default Port, when not specified
 
-set(FERMware_SRCS main.cpp commands.cpp globals.cpp sensors.cpp)
+set(FERMware_SRCS main.cpp commands.cpp globals.cpp sensors.cpp system.cpp)
 
 #====================================================================#
 # Controller firmware
