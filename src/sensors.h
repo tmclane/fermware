@@ -11,6 +11,7 @@ struct Sensor
 };
 
 extern struct Sensor* sensors;
+extern int sensor_count;
 
 void list_sensors(int);
 void update_sensors(int);
