@@ -7,6 +7,7 @@ unsigned long system_last_time;
 
 #define ACTIVATION_TIME 60
 
+
 float zone_temperature(const byte address[8])
 {
   for (int i=0; i<sensor_count; i++) {
@@ -37,19 +38,34 @@ void maintain_system(unsigned long current_time)
 
     // Maintain Ale Zone (Bottom Chamber)
     float zone_temp = zone_temperature((const byte*)BOTTOMCHAMBER_ADDR);
-    if (zone_temp > (bottom_zone_setting - bottom_zone_overshoot))
+    if (zone_temp > (bottom_temp_setting + bottom_temp_overshoot) &&
+        bottom_zone_state == IDLE){
       digitalWrite(BOTTOMCHAMBER, LOW);  // Enable cooling
-    else
+      bottom_zone_state = COOLING;
+    }
+
+    if (zone_temp < (bottom_temp_setting - bottom_temp_undershoot) &&
+        bottom_zone_state == COOLING){
       digitalWrite(BOTTOMCHAMBER, HIGH);  // Disable cooling
+      bottom_zone_state = IDLE;
+    }
 
     // Maintain Lager Zone (Top Chamber)
+    // TODO
 
     // Maintain Cooling System
     zone_temp = zone_temperature(GLYCOL_ADDR);
-    if (zone_temp > (glycol_temp_setting - glycol_temp_overshoot))
+    if ( zone_temp > (glycol_temp_setting - glycol_temp_overshoot) &&
+         glycol_state == IDLE){
       digitalWrite(AIRCON, LOW);  // Enable cooling
-    else
+      glycol_state = COOLING;
+    }
+
+    if ( zone_temp < (glycol_temp_setting + glycol_temp_undershoot) &&
+         glycol_state == COOLING) {
       digitalWrite(AIRCON, HIGH);  // Disable cooling
+      glycol_state = IDLE;
+    }
 
     system_last_time = current_time;
   }
