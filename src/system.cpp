@@ -55,13 +55,13 @@ void maintain_system(unsigned long current_time)
 
     // Maintain Cooling System
     zone_temp = zone_temperature(GLYCOL_ADDR);
-    if ( zone_temp > (glycol_temp_setting - glycol_temp_overshoot) &&
+    if ( zone_temp > (glycol_temp_setting + glycol_temp_overshoot) &&
          glycol_state == IDLE){
       digitalWrite(AIRCON, LOW);  // Enable cooling
       glycol_state = COOLING;
     }
 
-    if ( zone_temp < (glycol_temp_setting + glycol_temp_undershoot) &&
+    if ( zone_temp < (glycol_temp_setting - glycol_temp_undershoot) &&
          glycol_state == COOLING) {
       digitalWrite(AIRCON, HIGH);  // Disable cooling
       glycol_state = IDLE;
