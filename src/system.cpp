@@ -5,7 +5,7 @@
 
 unsigned long system_last_time;
 
-#define ACTIVATION_TIME 15
+#define ACTIVATION_TIME 30
 
 
 float zone_temperature(const byte address[8])
