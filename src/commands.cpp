@@ -31,7 +31,7 @@ void system_state()
   String response = "{\"status\":{";
   response += "\"glycol\":";
   response += glycol_state == COOLING ? "\"COOLING\"" : "\"IDLE\"";
-  response += ",\"bottom\":\"";
+  response += ",\"bottom\":";
   response += bottom_zone_state == COOLING ? "\"COOLING\"" : "\"IDLE\"";
   response += "}}";
   Serial.println(response);
