@@ -1,4 +1,5 @@
 #include "commands.h"
+#include "globals.h"
 #include "sensors.h"
 
 String current_command = "";
@@ -25,10 +26,24 @@ void set_pinstate(const String &cmd)
   digitalWrite(atoi(buff), pinstate);
 }
 
+void system_state()
+{
+  String response = "{\"status\":{";
+  response += "\"glycol\":";
+  response += glycol_state == COOLING ? "\"COOLING\"" : "\"IDLE\"";
+  response += ",\"bottom\":\"";
+  response += bottom_zone_state == COOLING ? "\"COOLING\"" : "\"IDLE\"";
+  response += "}}";
+  Serial.println(response);
+}
+
 void process_command(const String &command)
 {
   if (command == "list_sensors"){
     list_sensors(A4);
+  }
+  else if (command == "status"){
+    system_state();
   }
   else if (command.startsWith("set_pin")){
     set_pinstate(command);
