@@ -28,8 +28,7 @@ void set_pinstate(const String &cmd)
 
 void system_state()
 {
-  Serial.print("{\"status\":{");
-  Serial.print("\"glycol\":");
+  Serial.print("{\"status\":{\"glycol\":");
   Serial.print(glycol_state == COOLING ? "\"COOLING\"" : "\"IDLE\"");
   Serial.print(",\"bottom\":");
   Serial.print(bottom_zone_state == COOLING ? "\"COOLING\"" : "\"IDLE\"");
