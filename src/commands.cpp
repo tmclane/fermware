@@ -28,13 +28,12 @@ void set_pinstate(const String &cmd)
 
 void system_state()
 {
-  String response = "{\"status\":{";
-  response += "\"glycol\":";
-  response += glycol_state == COOLING ? "\"COOLING\"" : "\"IDLE\"";
-  response += ",\"bottom\":";
-  response += bottom_zone_state == COOLING ? "\"COOLING\"" : "\"IDLE\"";
-  response += "}}";
-  Serial.println(response);
+  Serial.print("{\"status\":{");
+  Serial.print("\"glycol\":");
+  Serial.print(glycol_state == COOLING ? "\"COOLING\"" : "\"IDLE\"");
+  Serial.print(",\"bottom\":");
+  Serial.print(bottom_zone_state == COOLING ? "\"COOLING\"" : "\"IDLE\"");
+  Serial.println("}}");
 }
 
 void process_command(const String &command)
