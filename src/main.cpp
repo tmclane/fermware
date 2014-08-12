@@ -21,6 +21,8 @@ void setup()
     pinMode(i, OUTPUT);
     digitalWrite(i, HIGH);
   }
+
+  discover_sensors(SENSOR_PIN);
 }
 
 void loop()
