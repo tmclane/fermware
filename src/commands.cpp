@@ -39,7 +39,10 @@ void system_state()
 void process_command(const String &command)
 {
   if (command == "list_sensors"){
-    list_sensors(A4);
+    list_sensors(SENSOR_PIN);
+  }
+  else if (command == "discover_sensors"){
+    discover_sensors(SENSOR_PIN);
   }
   else if (command == "status"){
     system_state();

@@ -3,6 +3,7 @@
 #include "commands.h"
 #include "constants.h"
 #include "globals.h"
+#include "sensors.h"
 #include "system.h"
 
 unsigned long last_time = -1;
