@@ -4,7 +4,7 @@
 int ledState = LOW;
 
 // Initial configuration
-int bottom_temp_setting = 65;
+int bottom_temp_setting = 62;
 int bottom_temp_undershoot = 0.5;
 int bottom_temp_overshoot = 0.5;
 int bottom_zone_state = 0;
