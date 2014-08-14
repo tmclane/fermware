@@ -3,14 +3,14 @@
 
 extern int ledState;
 
-extern int bottom_temp_setting;
-extern int bottom_temp_overshoot;
-extern int bottom_temp_undershoot;
-extern int bottom_zone_state;
+extern float bottom_temp_setting;
+extern float bottom_temp_overshoot;
+extern float bottom_temp_undershoot;
+extern char bottom_zone_state;
 
-extern int glycol_temp_setting;
-extern int glycol_temp_overshoot;
-extern int glycol_temp_undershoot;
-extern int glycol_state;
+extern float glycol_temp_setting;
+extern float glycol_temp_overshoot;
+extern float glycol_temp_undershoot;
+extern char glycol_state;
 
 #endif
