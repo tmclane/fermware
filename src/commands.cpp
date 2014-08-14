@@ -69,7 +69,7 @@ void system_state()
 {
   Serial.print("{\"status\":{\"glycol\":{\"state\":");
   Serial.print(glycol_state == COOLING ? "\"COOLING\"" : "\"IDLE\"");
-  Serial.print("\"setpoint\":");
+  Serial.print(",\"setpoint\":");
   Serial.print(glycol_temp_setting);
   Serial.print(",\"overshoot\":");
   Serial.print(glycol_temp_overshoot);
@@ -77,7 +77,7 @@ void system_state()
   Serial.print(glycol_temp_undershoot);
   Serial.print("},\"bottom\":{\"state\":");
   Serial.print(bottom_zone_state == COOLING ? "\"COOLING\"" : "\"IDLE\"");
-  Serial.print("\"setpoint\":");
+  Serial.print(",\"setpoint\":");
   Serial.print(bottom_temp_setting);
   Serial.print(",\"overshoot\":");
   Serial.print(bottom_temp_overshoot);
