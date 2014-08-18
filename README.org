@@ -1,0 +1,50 @@
+#+TITLE:	README for Fermware
+#+AUTHOR:	Travis McLane
+#+EMAIL:	tmclane@gmail.com
+#+STARTUP:	content
+#+Last Update: 2014-8-13
+
+* PROJECT Fermware
+
+  This project is intended to be a functional multi-zone fermentation chamber control firmware.
+  It was designed to manage a configurable number of *zones* with a choice of two different control
+  algorithms.  Currently only the *hysteresis* algorithm is implemented.
+
+  At this time it is only capable of either heating or cooling at a given time.
+  The reason for this is that I have no 'heating' capability in my physical chamber at this time.
+  It will be added when it is needed.
+
+** Control Algorithms
+
+   Each zone is configurable to be managed by one of the following types:
+
+   - Hysteresis
+
+     The hysteresis algorithm is used to keep the temperature of the sensor it is monitoring
+     within the range specified.
+
+     The configuration is:
+     - set point
+       desired temperature for the zone.
+
+     - overshoot
+       amount in degress of acceptable overshoot above the set point before cooling is applied
+
+     - undershoot
+       amount in degress of acceptable undershooting of the set point
+
+     It's operation is as follows:
+
+     - If the temperature is above the *set point* but below the *overshoot* increment and the system is
+       idle nothing happens.
+
+     - If the temperature is above the *set point* and the *overshoot* increment then the system enters
+       the cooling state.
+
+     - If the temperature is below the *set point* and above the *undershoot* decrement then the system
+       continues cooling.
+
+
+   - PID
+
+     Not currently implemented.
