@@ -4,7 +4,7 @@
 #+STARTUP:	content
 #+Last Update: 2014-8-13
 
-* PROJECT Fermware
+* Fermware
 
   This project is intended to be a functional multi-zone fermentation chamber control firmware.
   It was designed to manage a configurable number of *zones* with a choice of two different control
