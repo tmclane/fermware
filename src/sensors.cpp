@@ -34,7 +34,7 @@ void sensor_temperature(OneWire &ds, const byte* addr, float &celsius, float &fa
   ds.select(addr);
   ds.write(0x44, 0);        // start conversion, with parasite power on at the end
 
-  //  delay(100);     // maybe 750ms is enough, maybe not
+  delay(100);     // maybe 750ms is enough, maybe not
   // we might do a ds.depower() here, but the reset will take care of it.
 
   present = ds.reset();
@@ -160,7 +160,16 @@ void list_sensors(int onewire_pin)
 void update_sensors(int onewire_pin)
 {
   int processed = 0;
+  float current_f;
+  float current_c;
+
   for (int i=0; i<sensor_count; i++){
-    sensor_temperature(ds, sensors[i].address, sensors[i].celsius, sensors[i].fahrenheit);
+    sensor_temperature(ds, sensors[i].address, current_c, current_f);
+
+    if (abs(current_f - sensors[i].fahrenheit) < 20)
+      sensors[i].fahrenheit = current_f;
+
+    if (abs(current_c - sensors[i].celsius) < 20)
+      sensors[i].celsius = current_c;
   }
 }
