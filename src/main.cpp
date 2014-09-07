@@ -25,6 +25,8 @@ void setup()
   }
 
   zones_init();
+
+  Serial.println("Ready to ferment!");
 }
 
 void loop()
