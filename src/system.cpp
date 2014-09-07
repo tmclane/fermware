@@ -36,7 +36,7 @@ float zone_temperature(const byte address[8])
 // Rules are hardcoded for now.
 void maintain_system(unsigned long current_time)
 {
-  if ((current_time - system_last_time / 1000) > SENSOR_UPDATE_TIME){
+  if ((current_time - system_last_time) / 1000 > SENSOR_UPDATE_TIME){
     Serial.println("Updating sensor values");
     update_sensors(SENSOR_PIN);
   }
