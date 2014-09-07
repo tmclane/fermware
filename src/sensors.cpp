@@ -174,16 +174,16 @@ void update_sensors(int onewire_pin)
 
   for (int i=0; i<sensor_count; i++){
     Sensor s = sensors[i];
-    int sample = s.sample;
+    int sample = s.sample++;
+    if (s.sample > 2)
+      s.sample = 0; // reset our sample counter
+    }
     sensor_temperature(ds, s.address, current_c, current_f);
 
     s.f_samples[sample] = current_f;
     s.c_samples[sample] = current_c;
 
-    // Increment the sample count
-    s.sample++;
-    if (s.sample > 2) {
-      s.sample = 0;
+    if (sample >= 2) {
       s.fahrenheit = average(s.f_samples, 3);
       s.celsius = average(s.c_samples, 3);
     }
