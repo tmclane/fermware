@@ -5,6 +5,7 @@
 #include "globals.h"
 #include "sensors.h"
 #include "system.h"
+#include "zone.h"
 
 unsigned long last_time = -1;
 
@@ -22,6 +23,8 @@ void setup()
     pinMode(i, OUTPUT);
     digitalWrite(i, HIGH);
   }
+
+  zones_init();
 }
 
 void loop()
