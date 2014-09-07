@@ -180,15 +180,12 @@ void update_sensors(int onewire_pin)
   float current_c;
 
   while (!sensor_count){
-    Serial.println("FATAL: No sensors present!");
+    Serial.println("{\"message\": \"FATAL: No sensors present!\"}");
     discover_sensors(onewire_pin);
   }
 
   for (int i=0; i<sensor_count; i++){
     int sample = sensors[i].sample;
-
-    Serial.print("Processing for sample - #");
-    Serial.println(sample);
 
     sensor_temperature(onewire, sensors[i].address,
                        current_c, current_f);
