@@ -21,32 +21,45 @@ void set_global(const String &cmd)
   String variable = args.substring(0, index);
   args.substring(index+1).toCharArray(buff, 10);
 
+  Serial.print("{\"status\": \"success\",\"message\":");
+
   if (command == "bottom_temp"){
     bottom_temp_setting = atoi(buff);
-    Serial.println("Set 'bottom_temp' to " + bottom_temp_setting);
+    Serial.print("\"Set 'bottom_temp' to ");
+    Serial.print(bottom_temp_setting);
+    Serial.println("\"}");
   }
   if (command == "bottom_undershoot"){
     bottom_temp_undershoot = atoi(buff);
-    Serial.println("Set 'bottom_temp_undershoot' to " + bottom_temp_undershoot);
+    Serial.print("\"Set 'bottom_temp_undershoot' to ");
+    Serial.print(bottom_temp_undershoot);
+    Serial.println("\"}");
   }
   if (command == "bottom_overshoot"){
     bottom_temp_overshoot = atoi(buff);
-    Serial.println("Set 'bottom_temp_overshoot' to " + bottom_temp_overshoot);
+    Serial.print("\"Set 'bottom_temp_overshoot' to ");
+    Serial.print(bottom_temp_overshoot);
+    Serial.println("\"}");
   }
 
   if (command == "glycol_temp"){
     glycol_temp_setting = atoi(buff);
-    Serial.println("Set 'glycol_temp' to " + glycol_temp_setting);
+    Serial.print("\"Set 'glycol_temp' to ");
+    Serial.print(glycol_temp_setting);
+    Serial.println("\"}");
   }
   if (command == "glycol_undershoot"){
     glycol_temp_undershoot = atoi(buff);
-    Serial.println("Set 'glycol_temp_undershoot' to " + glycol_temp_undershoot);
+    Serial.print("\"Set 'glycol_temp_undershoot' to ");
+    Serial.print(glycol_temp_undershoot);
+    Serial.println("\"}");
   }
   if (command == "bottom_overshoot"){
     glycol_temp_overshoot = atoi(buff);
-    Serial.println("Set 'glycol_temp_overshoot' to " + glycol_temp_overshoot);
+    Serial.print("\"Set 'glycol_temp_overshoot' to ");
+    Serial.print(glycol_temp_overshoot);
+    Serial.println("\"}");
   }
-
 }
 
 void set_pinstate(const String &cmd)
