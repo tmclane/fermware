@@ -27,20 +27,16 @@ void setup()
 void loop()
 {
   unsigned long current_time = millis();
-  if (last_time == -1)
-    current_time = -1;  // to ensure the code runs right away
 
-  if(current_time - last_time > 1000 || last_time == -1) {
-    last_time = current_time;
+  if (current_time - last_time > 1000 || last_time == -1) {
     ledState = ledState == HIGH ? LOW : HIGH;
     digitalWrite(HEARTBEAT_LED, ledState);
 
     maintain_system(current_time);
 
-    if (last_time == -1)
-      last_time = millis();
+    last_time = current_time;
   }
 
   process_commands();
-
+  delay(1);
 }
