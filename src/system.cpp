@@ -10,13 +10,13 @@ unsigned long system_last_time;
 
 float zone_temperature(const byte address[8])
 {
+  bool found = false;
   for (int i=0; i<sensor_count; i++) {
-    bool found = true;
-    for (int j=0; j<8; j++)
+    for (int j=0; j<8; j++) {
       if (sensors[i].address[j] != address[j]){
-        found = false;
         break;
       }
+    }
 
     if (found) {
       return sensors[i].fahrenheit;
@@ -34,8 +34,6 @@ void maintain_system(unsigned long current_time)
 {
   if ((current_time - system_last_time) / 1000 > ACTIVATION_TIME || current_time == -1){
     // Update our cached temperatures
-    update_sensors(SENSOR_PIN);
-    delay(100);
     update_sensors(SENSOR_PIN);
 
     // Maintain Ale Zone (Bottom Chamber)
@@ -60,11 +58,13 @@ void maintain_system(unsigned long current_time)
     // Maintain Cooling System
     zone_temp = zone_temperature(GLYCOL_ADDR);
     if ( zone_temp > 44 && glycol_state == IDLE){
+      Serial.println("Enabling cooling for glycol: Temperature: " + zone_temp);
       digitalWrite(AIRCON, LOW);  // Enable cooling
       glycol_state = COOLING;
     }
 
     if ( zone_temp < 24 && glycol_state == COOLING) {
+      Serial.println("Disabling cooling for glycol: Temperature: " + zone_temp);
       digitalWrite(AIRCON, HIGH);  // Disable cooling
       glycol_state = IDLE;
     }
