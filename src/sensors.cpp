@@ -166,6 +166,10 @@ float average(float *values, int count)
   for (int i=0; i<count; i++) {
     total += values[i];
   }
+
+  Serial.print("Avg: ");
+  Serial.println(total / (float)count);
+
   return total / (float)count;
 }
 
@@ -181,17 +185,16 @@ void update_sensors(int onewire_pin)
   }
 
   for (int i=0; i<sensor_count; i++){
-    Sensor s = sensors[i];
-    int sample = s.sample++;
+    int sample = sensors[i].sample++;
+    Serial.print("Processing for sample - #");
+    Serial.println(sample);
 
-    sensor_temperature(onewire, s.address, current_c, current_f);
+    sensor_temperature(onewire, sensors[i].address,
+                       current_c, current_f);
 
     // Check for bogus readings
     if (current_f < -60 && current_f > 100)
       continue;
-
-    if (s.sample > 2)
-      s.sample = 0; // reset our sample counter
 
     sensors[i].celsius = current_c;
     sensors[i].fahrenheit = current_f;
@@ -203,5 +206,8 @@ void update_sensors(int onewire_pin)
       sensors[i].fahrenheit_avg = average(s.f_samples, 3);
       sensors[i].celsius_avg = average(s.c_samples, 3);
     }
+
+    if (sensors[i].sample >= 2)
+      sensors[i].sample = 0; // reset our sample counter
   }
 }
