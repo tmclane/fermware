@@ -12,16 +12,16 @@ float zone_temperature(const byte address[8])
 {
   bool found = false;
   for (int i=0; i<sensor_count; i++) {
+    found = true;
     for (int j=0; j<8; j++) {
       if (sensors[i].address[j] != address[j]){
+        found = false;
         break;
       }
     }
 
-    if (found) {
+    if (found)
       return sensors[i].fahrenheit;
-
-    }
   }
 
   return -199.0;
