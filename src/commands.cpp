@@ -130,7 +130,10 @@ void process_commands()
 
       process_command(current_command);
     }
-    else
+    else {
       current_command += value;
+      if (current_command.length() > 25)
+        current_command = "";
+    }
   }
 }
