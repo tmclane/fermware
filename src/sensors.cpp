@@ -32,7 +32,7 @@ void sensor_temperature(OneWire &ds, const byte* addr, float &celsius, float &fa
 
   ds.reset();
   ds.select(addr);
-  ds.write(0x44, 0);
+  ds.write(0x44, );
 
   delay(200);     // maybe 750ms is enough, maybe not
   // we might do a ds.depower() here, but the reset will take care of it.
@@ -126,7 +126,7 @@ void discover_sensors(int onewire_pin)
   }
 
   if (count){
-    sensors = (struct Sensor*)malloc(sizeof(struct Sensor) * sensor_count);
+    sensors = (struct Sensor*)malloc(sizeof(struct Sensor) * count);
     memset(sensors, 0, sizeof(struct Sensor*));
   }
 
