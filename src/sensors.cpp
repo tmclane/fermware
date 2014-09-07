@@ -174,6 +174,9 @@ void update_sensors(int onewire_pin)
   float current_f;
   float current_c;
 
+  if (!sensor_count)
+    Serial.println("FATAL: No sensors present!");
+
   for (int i=0; i<sensor_count; i++){
     Sensor s = sensors[i];
     int sample = s.sample++;
