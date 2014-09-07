@@ -187,14 +187,6 @@ void update_sensors(int onewire_pin)
   for (int i=0; i<sensor_count; i++){
     int sample = sensors[i].sample;
 
-    if (sample == 3) {
-      sensors[i].fahrenheit_avg = average(sensors[i].f_samples, 3);
-      sensors[i].celsius_avg = average(sensors[i].c_samples, 3);
-
-      sensors[i].sample = -1;
-      sample = 0;
-    }
-
     Serial.print("Processing for sample - #");
     Serial.println(sample);
 
@@ -211,6 +203,14 @@ void update_sensors(int onewire_pin)
     sensors[i].f_samples[sample] = current_f;
     sensors[i].c_samples[sample] = current_c;
 
-    sensors[i].sample++;
+    if (sample == 2) {
+      sensors[i].fahrenheit_avg = average(sensors[i].f_samples, 3);
+      sensors[i].celsius_avg = average(sensors[i].c_samples, 3);
+
+      sensors[i].sample = -1;
+      sample = 0;
+    }
+    else
+      sensors[i].sample++;
   }
 }
