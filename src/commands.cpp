@@ -128,7 +128,7 @@ void process_commands()
 
       process_command(current_command);
 
-      current_command = "";
+      current_command = String();
     }
     else
       current_command += value;
