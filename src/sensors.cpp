@@ -125,6 +125,7 @@ void discover_sensors(int onewire_pin)
 
   if (count){
     sensors = (struct Sensor*)malloc(sizeof(struct Sensor) * sensor_count);
+    memset(sensors, sensor_count, sizeof(struct Sensor*));
   }
 
   ds.reset_search();
@@ -175,9 +176,10 @@ void update_sensors(int onewire_pin)
   for (int i=0; i<sensor_count; i++){
     Sensor s = sensors[i];
     int sample = s.sample++;
+
     if (s.sample > 2)
       s.sample = 0; // reset our sample counter
-    }
+
     sensor_temperature(ds, s.address, current_c, current_f);
 
     s.f_samples[sample] = current_f;
