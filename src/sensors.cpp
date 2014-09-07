@@ -126,8 +126,9 @@ void discover_sensors(int onewire_pin)
   }
 
   if (count){
-    sensors = (struct Sensor*)malloc(sizeof(struct Sensor) * count);
-    memset(sensors, 0, sizeof(struct Sensor*));
+    int sensor_bytes = sizeof(struct Sensor) * count;
+    sensors = (struct Sensor*)malloc(sensor_bytes);
+    memset(sensors, 0, sensor_bytes);
   }
 
   onewire.reset_search();
