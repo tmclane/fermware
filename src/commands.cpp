@@ -116,7 +116,7 @@ void process_command()
     Serial.print(command);
     Serial.println("'\"}");
   }
-
+  Serial.flush();
   clear_command_buffer();
 }
 
