@@ -177,13 +177,8 @@ void update_sensors(int onewire_pin)
     int sample = s.sample;
     sensor_temperature(ds, s.address, current_c, current_f);
 
-    /*
-    if (abs(current_f - s.fahrenheit[s.sample]) < 20)
-      s.f_samples[sample] = current_f;
-
-    if (abs(current_c - s.celsius[sample]) < 20)
-      s.c_samples[sample] = current_c;
-    */
+    s.f_samples[sample] = current_f;
+    s.c_samples[sample] = current_c;
 
     // Increment the sample count
     s.sample++;
