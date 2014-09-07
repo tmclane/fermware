@@ -149,7 +149,6 @@ void list_sensors(int onewire_pin)
     Serial.print('[');
     sensor_details(ds, sensors[0]);
   }
-  int processed = 0;
   for (int i=1; i<sensor_count; i++){
     Serial.print(',');
     sensor_details(ds, sensors[i]);
