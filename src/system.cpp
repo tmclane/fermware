@@ -39,7 +39,7 @@ void maintain_system(unsigned long current_time)
     update_sensors(SENSOR_PIN);
 
     // Maintain Ale Zone (Bottom Chamber)
-    float zone_temp = zone_temperature((const byte*)BOTTOMCHAMBER_ADDR);
+    float zone_temp = zone_temperature(BOTTOMCHAMBER_ADDR);
     if (zone_temp != -199.0) {
       if (zone_temp > (bottom_temp_setting + bottom_temp_overshoot) &&
           bottom_zone_state == IDLE){
@@ -58,7 +58,7 @@ void maintain_system(unsigned long current_time)
     // TODO
 
     // Maintain Cooling System
-    zone_temp = zone_temperature((const byte*)GLYCOL_ADDR);
+    zone_temp = zone_temperature(GLYCOL_ADDR);
     if ( zone_temp > 44 && glycol_state == IDLE){
       digitalWrite(AIRCON, LOW);  // Enable cooling
       glycol_state = COOLING;
