@@ -8,6 +8,9 @@ struct Sensor
   uint8_t address[8];
   float celsius;
   float fahrenheit;
+  float c_samples[3];
+  float f_samples[3];
+  int sample;
 };
 
 extern struct Sensor* sensors;
