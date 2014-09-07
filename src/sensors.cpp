@@ -181,12 +181,13 @@ void update_sensors(int onewire_pin)
       s.sample = 0; // reset our sample counter
 
     sensor_temperature(ds, s.address, current_c, current_f);
+    s.fahrenheit = current_f;
 
     s.f_samples[sample] = current_f;
     s.c_samples[sample] = current_c;
 
     if (sample >= 2) {
-      s.fahrenheit = average(s.f_samples, 3);
+      //      s.fahrenheit = average(s.f_samples, 3);
       s.celsius = average(s.c_samples, 3);
     }
   }
