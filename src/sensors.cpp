@@ -180,6 +180,9 @@ void update_sensors(int onewire_pin)
 
     sensor_temperature(ds, s.address, current_c, current_f);
 
+    Serial.print("F: ");
+    Serial.println(current_f);
+
     // Check for bogus readings
     if (current_f < -60 && current_f > 100)
       continue;
