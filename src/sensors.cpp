@@ -177,7 +177,9 @@ void update_sensors(int onewire_pin)
   float current_c;
 
   while (!sensor_count){
+#ifdef DEBUG
     Serial.println("{\"message\": \"FATAL: No sensors present!\"}");
+#endif
     discover_sensors(onewire_pin);
   }
 
