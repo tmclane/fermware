@@ -5,11 +5,11 @@
 int sensor_count = 0;
 struct Sensor* sensors = NULL;
 
-OneWire ds(SENSOR_PIN);
+OneWire onewire(SENSOR_PIN);
 
 void discover_sensors(int);
 
-void sensor_temperature(OneWire &ds, const byte* addr, float &celsius, float &fahrenheit)
+void sensor_temperature(const OneWire &ds, const byte* addr, float &celsius, float &fahrenheit)
 {
   byte type_s;
   byte data[12];
@@ -32,7 +32,7 @@ void sensor_temperature(OneWire &ds, const byte* addr, float &celsius, float &fa
 
   ds.reset();
   ds.select(addr);
-  ds.write(0x44, 0);        // start conversion, with parasite power on at the end
+  ds.write(0x44, 1);        // start conversion, with parasite power on at the end
 
   delay(100);     // maybe 750ms is enough, maybe not
   // we might do a ds.depower() here, but the reset will take care of it.
@@ -69,7 +69,7 @@ void sensor_temperature(OneWire &ds, const byte* addr, float &celsius, float &fa
   fahrenheit = celsius * 1.8 + 32.0;
 }
 
-void sensor_details(OneWire &ds, struct Sensor& sensor)
+void sensor_details(const OneWire &ds, struct Sensor& sensor)
 {
   Serial.print("{\"address\":\"");
   for(int i = 0; i < 7; i++) {
@@ -94,7 +94,7 @@ void sensor_details(OneWire &ds, struct Sensor& sensor)
   Serial.print('}');
 }
 
-int count_sensors(int onewire_pin)
+int count_sensors(const Onewire &ds)
 {
   byte addr[8];
 
@@ -118,7 +118,7 @@ int count_sensors(int onewire_pin)
 void discover_sensors(int onewire_pin)
 {
   int processed = 0;
-  int count = count_sensors(onewire_pin);
+  int count = count_sensors(onewire);
 
   if (sensors){
     free(sensors);
@@ -130,8 +130,8 @@ void discover_sensors(int onewire_pin)
     memset(sensors, 0, sizeof(struct Sensor*));
   }
 
-  ds.reset_search();
-  while(processed < count && ds.search(sensors[processed].address)){
+  onewire.reset_search();
+  while(processed < count && onewire.search(sensors[processed].address)){
     processed++;
   }
 
@@ -149,11 +149,11 @@ void list_sensors(int onewire_pin)
   }
   else {
     Serial.print('[');
-    sensor_details(ds, sensors[0]);
+    sensor_details(onewire, sensors[0]);
   }
   for (int i=1; i<sensor_count; i++){
     Serial.print(',');
-    sensor_details(ds, sensors[i]);
+    sensor_details(onewire, sensors[i]);
   }
   if (sensor_count)
     Serial.print("]\n");
@@ -174,7 +174,7 @@ void update_sensors(int onewire_pin)
   float current_f;
   float current_c;
 
-  if (!sensor_count){
+  while (!sensor_count){
     Serial.println("FATAL: No sensors present!");
     discover_sensors(onewire_pin);
   }
@@ -183,7 +183,7 @@ void update_sensors(int onewire_pin)
     Sensor s = sensors[i];
     int sample = s.sample++;
 
-    sensor_temperature(ds, s.address, current_c, current_f);
+    sensor_temperature(onewire, s.address, current_c, current_f);
 
     Serial.print("F: ");
     Serial.println(current_f);
