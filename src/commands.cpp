@@ -2,7 +2,13 @@
 #include "globals.h"
 #include "sensors.h"
 
-String current_command = "";
+char cmd_buff[100];
+char cmd_location = 0;
+
+void clear_command_buffer() {
+  memset(cmd_buff, '\0', 100);
+  cmd_location = 0;
+}
 
 void set_global(const String &cmd)
 {
@@ -86,8 +92,10 @@ void system_state()
   Serial.println("}}}");
 }
 
-void process_command(const String &command)
+void process_command()
 {
+  String command(cmd_buff);
+
   if (command == "list_sensors"){
     list_sensors(SENSOR_PIN);
   }
@@ -109,7 +117,7 @@ void process_command(const String &command)
     Serial.println("'\"}");
   }
 
-  current_command = "";
+  clear_command_buffer();
 }
 
 void process_commands()
@@ -123,17 +131,16 @@ void process_commands()
     Serial.print(value);
 #endif
 
-    if (value == '\r' || value == '\n')
+    if (value == '\n')
     {
-      if (current_command == "")
-        continue;
-
-      process_command(current_command);
+      if (cmd_location != 0)
+        process_command();
     }
     else {
-      current_command += value;
-      if (current_command.length() > 25)
-        current_command = "";
+      cmd_buff[cmd_location++] = value;
+
+      if (cmd_location >= 100)
+        clear_command_buffer();
     }
   }
 }
