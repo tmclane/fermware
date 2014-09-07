@@ -203,8 +203,8 @@ void update_sensors(int onewire_pin)
     sensors[i].c_samples[sample] = current_c;
 
     if (sample >= 2) {
-      sensors[i].fahrenheit_avg = average(s.f_samples, 3);
-      sensors[i].celsius_avg = average(s.c_samples, 3);
+      sensors[i].fahrenheit_avg = average(sensors[i].f_samples, 3);
+      sensors[i].celsius_avg = average(sensors[i].c_samples, 3);
     }
 
     if (sensors[i].sample >= 2)
