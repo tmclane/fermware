@@ -187,6 +187,7 @@ void update_sensors(int onewire_pin)
     if (s.sample > 2)
       s.sample = 0; // reset our sample counter
 
+    s.celsius = current_c;
     s.fahrenheit = current_f;
 
     s.f_samples[sample] = current_f;
