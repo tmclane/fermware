@@ -9,27 +9,28 @@ unsigned long sensor_last_time;
 #define ACTIVATION_TIME 10
 #define SENSOR_UPDATE_TIME ACTIVATION_TIME / 2
 
-float zone_temperature(const byte address[8])
+int locate_sensor(const byte address[8])
 {
-  bool found = false;
-  float value = -199.0;
-
   for (int i=0; i<sensor_count; i++) {
-    found = true;
+    int matching = 0;
     for (int j=0; j<8; j++) {
-      if (sensors[i].address[j] != address[j]){
-        found = false;
-        break;
+      if (sensors[i].address[j] == address[j]){
+        matching++;
       }
     }
-
-    if (found){
-      value = sensors[i].fahrenheit;
-      break;
-    }
+    if (matching == 8)
+      return i;
   }
+  return -1;
+}
 
-  return value;
+float zone_temperature(const byte address[8])
+{
+  int index = locate_sensor(address);
+  if (index >= 0)
+    return sensors[index].fahrenheit;
+  else
+    return -199.0;
 }
 
 
