@@ -40,7 +40,9 @@ void maintain_system(unsigned long current_time)
 {
   if ((current_time - sensor_last_time) / 1000 > SENSOR_UPDATE_TIME || current_time == -1){
     sensor_last_time = current_time;
+#ifdef DEBUG
     Serial.println("Updating sensor values");
+#endif
     update_sensors(SENSOR_PIN);
   }
 
@@ -49,8 +51,6 @@ void maintain_system(unsigned long current_time)
 
     // Maintain Ale Zone (Bottom Chamber)
     float zone_temp = zone_temperature(BOTTOMCHAMBER_ADDR);
-    Serial.print("Bottom Chamber Temp: ");
-    Serial.println(zone_temp);
     if (zone_temp != -199.0) {
       if (zone_temp > (bottom_temp_setting + bottom_temp_overshoot) &&
           bottom_zone_state == IDLE){
@@ -70,20 +70,22 @@ void maintain_system(unsigned long current_time)
 
     // Maintain Cooling System
     zone_temp = zone_temperature(GLYCOL_ADDR);
-    Serial.print("Glycol Temp: ");
-    Serial.println(zone_temp);
     if ( zone_temp > (glycol_temp_setting + glycol_temp_overshoot) &&
          glycol_state == IDLE){
+#ifdef DEBUG
       Serial.print("Enabling cooling for glycol: Temperature: ");
       Serial.println(zone_temp);
+#endif
       digitalWrite(AIRCON, LOW);  // Enable cooling
       glycol_state = COOLING;
     }
 
     if ( zone_temp < (glycol_temp_setting - glycol_temp_undershoot) &&
          glycol_state == COOLING) {
+#ifdef DEBUG
       Serial.print("Disabling cooling for glycol: Temperature: ");
       Serial.println(zone_temp);
+#endif
       digitalWrite(AIRCON, HIGH);  // Disable cooling
       glycol_state = IDLE;
     }
