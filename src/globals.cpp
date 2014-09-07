@@ -2,6 +2,7 @@
 #include <Arduino.h>
 
 int ledState = LOW;
+unsigned long uptime = 0;
 
 // Initial configuration
 float bottom_temp_setting = 62;

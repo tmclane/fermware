@@ -85,7 +85,11 @@ void set_pinstate(const String &cmd)
 
 void system_state()
 {
-  Serial.print("{\"status\":{\"glycol\":{\"state\":");
+  Serial.print("{\"status\":");
+  Serial.print("\"uptime\":");
+  Serial.print(uptime);
+  Serial.print(",");
+  Serial.print("{\"glycol\":{\"state\":");
   Serial.print(glycol_state == COOLING ? "\"COOLING\"" : "\"IDLE\"");
   Serial.print(",\"setpoint\":");
   Serial.print(glycol_temp_setting);

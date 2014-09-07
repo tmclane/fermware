@@ -41,6 +41,8 @@ void loop()
     maintain_system(current_time);
 
     last_time = current_time;
+
+    uptime += 1;
   }
 
   process_commands();

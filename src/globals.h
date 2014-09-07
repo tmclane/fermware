@@ -2,6 +2,7 @@
 #define _H_GLOBALS
 
 extern int ledState;
+extern unsigned long uptime;
 
 extern float bottom_temp_setting;
 extern float bottom_temp_overshoot;
