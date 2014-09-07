@@ -127,7 +127,7 @@ void discover_sensors(int onewire_pin)
 
   if (count){
     sensors = (struct Sensor*)malloc(sizeof(struct Sensor) * sensor_count);
-    memset(sensors, sensor_count, sizeof(struct Sensor*));
+    memset(sensors, 0, sizeof(struct Sensor*));
   }
 
   ds.reset_search();
