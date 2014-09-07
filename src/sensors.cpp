@@ -32,7 +32,7 @@ void sensor_temperature(OneWire &ds, const byte* addr, float &celsius, float &fa
 
   ds.reset();
   ds.select(addr);
-  ds.write(0x44, 1);
+  ds.write(0x44, 0);
 
   delay(200);     // maybe 750ms is enough, maybe not
   // we might do a ds.depower() here, but the reset will take care of it.
