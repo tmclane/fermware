@@ -207,7 +207,7 @@ void update_sensors(int onewire_pin)
       sensors[i].fahrenheit_avg = average(sensors[i].f_samples, 3);
       sensors[i].celsius_avg = average(sensors[i].c_samples, 3);
 
-      sensors[i].sample = -1;
+      sensors[i].sample = 0;
       sample = 0;
     }
     else
