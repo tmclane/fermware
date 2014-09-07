@@ -167,9 +167,6 @@ float average(float values[], int count)
     total += values[i];
   }
 
-  Serial.print("Avg: ");
-  Serial.println(total / (float)count);
-
   return total / (float)count;
 }
 
