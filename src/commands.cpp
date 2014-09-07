@@ -60,6 +60,8 @@ void set_global(const String &cmd)
     Serial.print(glycol_temp_overshoot);
     Serial.println("\"}");
   }
+
+
 }
 
 void set_pinstate(const String &cmd)
@@ -125,7 +127,7 @@ void process_command()
     set_pinstate(command);
   }
   else if (command.startsWith("set_global")){
-    set_global(command);
+    set_global(command.substring(command.indexOf(' ')+1));
   }
   else {
     Serial.print("{\"status\": \"error\", \"message\": \"Received command: '");
