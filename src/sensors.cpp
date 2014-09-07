@@ -9,7 +9,7 @@ OneWire onewire(SENSOR_PIN);
 
 void discover_sensors(int);
 
-void sensor_temperature(const OneWire &ds, const byte* addr, float &celsius, float &fahrenheit)
+void sensor_temperature(OneWire &ds, const byte* addr, float &celsius, float &fahrenheit)
 {
   byte type_s;
   byte data[12];
@@ -69,7 +69,7 @@ void sensor_temperature(const OneWire &ds, const byte* addr, float &celsius, flo
   fahrenheit = celsius * 1.8 + 32.0;
 }
 
-void sensor_details(const OneWire &ds, struct Sensor& sensor)
+void sensor_details(OneWire &ds, struct Sensor& sensor)
 {
   Serial.print("{\"address\":\"");
   for(int i = 0; i < 7; i++) {
@@ -94,7 +94,7 @@ void sensor_details(const OneWire &ds, struct Sensor& sensor)
   Serial.print('}');
 }
 
-int count_sensors(const Onewire &ds)
+int count_sensors(OneWire &ds)
 {
   byte addr[8];
 
