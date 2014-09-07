@@ -108,6 +108,8 @@ void process_command(const String &command)
     Serial.print(command);
     Serial.println("'\"}");
   }
+
+  current_command = "";
 }
 
 void process_commands()
@@ -127,8 +129,6 @@ void process_commands()
         continue;
 
       process_command(current_command);
-
-      current_command = String();
     }
     else
       current_command += value;
