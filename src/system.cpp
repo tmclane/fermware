@@ -58,13 +58,15 @@ void maintain_system(unsigned long current_time)
     // Maintain Cooling System
     zone_temp = zone_temperature(GLYCOL_ADDR);
     if ( zone_temp > 44 && glycol_state == IDLE){
-      Serial.println("Enabling cooling for glycol: Temperature: " + zone_temp);
+      Serial.print("Enabling cooling for glycol: Temperature: ");
+      Serial.println(zone_temp);
       digitalWrite(AIRCON, LOW);  // Enable cooling
       glycol_state = COOLING;
     }
 
     if ( zone_temp < 24 && glycol_state == COOLING) {
-      Serial.println("Disabling cooling for glycol: Temperature: " + zone_temp);
+      Serial.print("Disabling cooling for glycol: Temperature: ");
+      Serial.println(zone_temp);
       digitalWrite(AIRCON, HIGH);  // Disable cooling
       glycol_state = IDLE;
     }
