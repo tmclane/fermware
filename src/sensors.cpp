@@ -174,8 +174,10 @@ void update_sensors(int onewire_pin)
   float current_f;
   float current_c;
 
-  if (!sensor_count)
+  if (!sensor_count){
     Serial.println("FATAL: No sensors present!");
+    discover_sensors(onewire_pin);
+  }
 
   for (int i=0; i<sensor_count; i++){
     Sensor s = sensors[i];
@@ -193,15 +195,15 @@ void update_sensors(int onewire_pin)
     if (s.sample > 2)
       s.sample = 0; // reset our sample counter
 
-    s.celsius = current_c;
-    s.fahrenheit = current_f;
+    sensors[i].celsius = current_c;
+    sensors[i].fahrenheit = current_f;
 
-    s.f_samples[sample] = current_f;
-    s.c_samples[sample] = current_c;
+    sensors[i].f_samples[sample] = current_f;
+    sensors[i].c_samples[sample] = current_c;
 
     if (sample >= 2) {
-      s.fahrenheit_avg = average(s.f_samples, 3);
-      s.celsius_avg = average(s.c_samples, 3);
+      sensors[i].fahrenheit_avg = average(s.f_samples, 3);
+      sensors[i].celsius_avg = average(s.c_samples, 3);
     }
   }
 }
