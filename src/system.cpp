@@ -18,8 +18,10 @@ float zone_temperature(const byte address[8])
         break;
       }
 
-    if (found)
+    if (found) {
       return sensors[i].fahrenheit;
+
+    }
   }
 
   return -199.0;
@@ -45,7 +47,7 @@ void maintain_system(unsigned long current_time)
         bottom_zone_state = COOLING;
       }
 
-      if (zone_temp < (bottom_temp_setting - bottom_temp_undershoot) &&
+      if (zone_temp <= (bottom_temp_setting - bottom_temp_undershoot) &&
           bottom_zone_state == COOLING){
         digitalWrite(BOTTOMCHAMBER, HIGH);  // Disable cooling
         bottom_zone_state = IDLE;
@@ -56,19 +58,15 @@ void maintain_system(unsigned long current_time)
     // TODO
 
     // Maintain Cooling System
-    zone_temp = zone_temperature(GLYCOL_ADDR);
-    if (zone_temp != -199.0) {
-      if ( zone_temp > (glycol_temp_setting + glycol_temp_overshoot) &&
-           glycol_state == IDLE){
-        digitalWrite(AIRCON, LOW);  // Enable cooling
-        glycol_state = COOLING;
-      }
+    zone_temp = zone_temperature((const byte*)GLYCOL_ADDR);
+    if ( zone_temp > 44 && glycol_state == IDLE){
+      digitalWrite(AIRCON, LOW);  // Enable cooling
+      glycol_state = COOLING;
+    }
 
-      if ( zone_temp < (glycol_temp_setting - glycol_temp_undershoot) &&
-           glycol_state == COOLING) {
-        digitalWrite(AIRCON, HIGH);  // Disable cooling
-        glycol_state = IDLE;
-      }
+    if ( zone_temp < 24 && glycol_state == COOLING) {
+      digitalWrite(AIRCON, HIGH);  // Disable cooling
+      glycol_state = IDLE;
     }
 
     system_last_time = current_time;
