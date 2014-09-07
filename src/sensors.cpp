@@ -83,12 +83,14 @@ void sensor_details(OneWire &ds, struct Sensor& sensor)
 
   Serial.print(sensor.address[7], HEX);
   Serial.print("\",");
-
   Serial.print("\"C\":");
   Serial.print(sensor.celsius);
   Serial.print(",\"F\":");
   Serial.print(sensor.fahrenheit);
-
+  Serial.print(",\"F_AVG\":");
+  Serial.print(sensor.fahrenheit_avg);
+  Serial.print(",\"C_AVG\":");
+  Serial.print(sensor.celsius_avg);
   Serial.print('}');
 }
 
@@ -176,18 +178,23 @@ void update_sensors(int onewire_pin)
     Sensor s = sensors[i];
     int sample = s.sample++;
 
+    sensor_temperature(ds, s.address, current_c, current_f);
+
+    // Check for bogus readings
+    if (current_f < -60 && current_f > 100)
+      continue;
+
     if (s.sample > 2)
       s.sample = 0; // reset our sample counter
 
-    sensor_temperature(ds, s.address, current_c, current_f);
     s.fahrenheit = current_f;
 
     s.f_samples[sample] = current_f;
     s.c_samples[sample] = current_c;
 
     if (sample >= 2) {
-      //      s.fahrenheit = average(s.f_samples, 3);
-      s.celsius = average(s.c_samples, 3);
+      s.fahrenheit_avg = average(s.f_samples, 3);
+      s.celsius_avg = average(s.c_samples, 3);
     }
   }
 }

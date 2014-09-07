@@ -8,6 +8,8 @@ struct Sensor
   uint8_t address[8];
   float celsius;
   float fahrenheit;
+  float celsius_avg;
+  float fahrenheit_avg;
   float c_samples[3];
   float f_samples[3];
   int sample;
